@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
-function App() {
+import HOCPages from "./components/pages/HOCPage";
+import HookPage from "./components/pages/Hook_page";
+
+const App = () => {
+  const [page, setPage] = useState('HookPage');
+  const components = {
+    HOCPages: <HOCPages />,
+    HookPage: <HookPage />,
+  };
+
+  const changePage = (event) => {
+    setPage(event.target.dataset.page);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul>
+        <li onClick={changePage} data-page="HOCPages">
+          HOCpages
+        </li>
+        <li onClick={changePage} data-page="HookPage">
+          HookPage
+        </li>
+      </ul>
+      <section>{components[page]}</section>
     </div>
   );
-}
+};
+
+
 
 export default App;
