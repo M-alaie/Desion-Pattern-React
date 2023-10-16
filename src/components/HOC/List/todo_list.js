@@ -1,41 +1,22 @@
-import React, { useEffect, useState } from "react";
-
-const Todolist = () => {
-  const [Todos, setTodos] = useState([]);
-  const [term,setTerm]=useState('')
-
-  useEffect(() => {
-
-    const usersFetch=async()=>{
-      const res=await fetch("https://jsonplaceholder.typicode.com/todos")
-      const json=await res.json()
-    
-      setTodos(json)
-    }
-    usersFetch()   
-
-}, []); // Empty dependency array to run the effect only once
-let filterTodos=Todos.slice(0,10).filter(({title})=>title.includes(term))
-.map(todo=>(
-  <li key={todo.id}>
-    <span>{todo.title}</span>
-  </li>
-))
+import HOC from "../HOC";
+const Todolist = ({ data }) => {
+  const filterTodos = data.map(todo => {
+    return (
+      <li key={todo.id}>
+        <p>{todo.title}</p>
+      </li>
+    );
+  });
   return (
     <div>
-      <h2>User List</h2>
-      <input type="text" value={term} onChange={(e)=>setTerm(e.target.value)}/>
-      <ul>
-      <li>{filterTodos}</li>
-      </ul>
-
+      <ul>{filterTodos}</ul>
     </div>
   );
 };
 
-export default Todolist;
+const SerarchingTodos = HOC(Todolist, "todos");
 
-
+export default SerarchingTodos;
 
 // const xhr = new XMLHttpRequest();
 // xhr.open("GET", "https://jsonplaceholder.typicode.com/Todos");

@@ -3,18 +3,19 @@ import HOC from "../HOC";
 
 const Userlist = ({data}) => {
 
+  const filterUser=data.map(user=><li key={user.id}>
+      <span >{user.name}</span>
+    </li>
+  )
   return (
     <div>
-      <h2>UserList</h2>
-
       <ul>
-     {data}
+    <li> {filterUser}</li>
       </ul>
 
     </div>
   );
 };
-
 const SerarchingUsers=HOC(Userlist,"users")
 
 export default SerarchingUsers;
